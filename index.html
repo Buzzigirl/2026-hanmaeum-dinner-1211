@@ -334,6 +334,7 @@
 
   <script>
     const DB_PATH = "2026_hanmaeum_dinner_1211";
+    const SHARED_DB_PATH = "2026_hanmaeum_dinner_1211_shared";
     const MEMBERS = [
       { id:"member_01", group:"영관장교", name:"윤창호", role:"중령" },
       { id:"member_02", group:"영관장교", name:"최영현", role:"소령" },
@@ -368,6 +369,16 @@
       { id:"member_31", group:"부사관", name:"이호진", role:"하사" },
       { id:"member_32", group:"부사관", name:"박지훈", role:"하사" }
     ];
+    const SHARED_IDS = {
+      member_01:"yoon_changho",
+      member_02:"choi_younghyun",
+      member_15:"lee_doheon",
+      member_16:"cho_hyunho",
+      member_17:"ryu_junho",
+      member_18:"seo_kangseok",
+      member_21:"song_garam",
+      member_28:"cheon_jeonghwan"
+    };
     const GROUPS = ["영관장교", "위관장교", "준사관", "부사관"];
     const VALID_CHOICES = new Set(["personal", "couple", "unavailable"]);
     const firebaseConfig = {
@@ -381,6 +392,7 @@
     };
 
     let records = {};
+    let sharedRecords = {};
     let selectedItem = null;
     let selectedChoice = null;
     let firebaseReady = false;
@@ -400,8 +412,13 @@
       return value;
     }
 
+    function getRecord(member) {
+      const sharedId = SHARED_IDS[member.id];
+      return normalizeRecord(sharedId ? sharedRecords[sharedId] : records[member.id]);
+    }
+
     function renderHeader() {
-      document.getElementById("pendingCount").textContent = `${MEMBERS.filter(member => !normalizeRecord(records[member.id])).length}명`;
+      document.getElementById("pendingCount").textContent = `${MEMBERS.filter(member => !getRecord(member)).length}명`;
     }
 
     function renderForm() {
@@ -423,7 +440,7 @@
         const grid = document.createElement("div");
         grid.className = "member-grid";
         MEMBERS.filter(member => member.group === groupName).forEach(member => {
-          const record = normalizeRecord(records[member.id]);
+          const record = getRecord(member);
           const button = document.createElement("button");
           button.type = "button";
           button.className = `member-btn${record ? ` ${record.choice}` : ""}`;
@@ -448,7 +465,7 @@
       let couple = 0;
       let unavailable = 0;
       MEMBERS.forEach(member => {
-        const record = normalizeRecord(records[member.id]);
+        const record = getRecord(member);
         if (!record) return;
         if (record.choice === "personal") personal += 1;
         if (record.choice === "couple") couple += 1;
@@ -478,7 +495,7 @@
 
     function openResponse(member) {
       selectedItem = member;
-      selectedChoice = normalizeRecord(records[member.id])?.choice || null;
+      selectedChoice = getRecord(member)?.choice || null;
       renderForm();
       backdropEl.classList.add("open");
       backdropEl.setAttribute("aria-hidden", "false");
@@ -508,7 +525,9 @@
         headcount: choice === "couple" ? 2 : choice === "personal" ? 1 : 0,
         updatedAt: Date.now()
       };
-      records[member.id] = payload;
+      const sharedId = SHARED_IDS[member.id];
+      if (sharedId) sharedRecords[sharedId] = payload;
+      else records[member.id] = payload;
       renderAll();
       closeResponse();
 
@@ -519,7 +538,8 @@
       }
 
       try {
-        await firebaseApi.set(firebaseApi.ref(database, `${DB_PATH}/responses/${member.id}`), payload);
+        const responsePath = sharedId ? `${SHARED_DB_PATH}/responses/${sharedId}` : `${DB_PATH}/responses/${member.id}`;
+        await firebaseApi.set(firebaseApi.ref(database, responsePath), payload);
         showToast(`${member.name}님 응답을 저장했습니다`);
       } catch (error) {
         updateSyncStatus("error");
@@ -556,6 +576,15 @@
         database = getDatabase(app);
         firebaseApi = { ref, set };
         const dataRef = ref(database, `${DB_PATH}/responses`);
+        const sharedDataRef = ref(database, `${SHARED_DB_PATH}/responses`);
+        let localLoaded = false;
+        let sharedLoaded = false;
+        const markReady = () => {
+          if (!localLoaded || !sharedLoaded) return;
+          firebaseReady = true;
+          updateSyncStatus("online");
+          renderAll();
+        };
         onValue(dataRef, snapshot => {
           records = {};
           if (snapshot.exists()) {
@@ -564,8 +593,24 @@
               if (memberExists) records[child.key] = child.val();
             });
           }
-          firebaseReady = true;
-          updateSyncStatus("online");
+          localLoaded = true;
+          markReady();
+          renderAll();
+        }, () => {
+          firebaseReady = false;
+          updateSyncStatus("error");
+          renderAll();
+        });
+        onValue(sharedDataRef, snapshot => {
+          sharedRecords = {};
+          if (snapshot.exists()) {
+            const allowedIds = new Set(Object.values(SHARED_IDS));
+            snapshot.forEach(child => {
+              if (allowedIds.has(child.key)) sharedRecords[child.key] = child.val();
+            });
+          }
+          sharedLoaded = true;
+          markReady();
           renderAll();
         }, () => {
           firebaseReady = false;
