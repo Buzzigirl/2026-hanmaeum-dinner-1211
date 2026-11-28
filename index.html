@@ -13,16 +13,45 @@
     :root{--navy:#172642;--navy-2:#263957;--page:#f4f6f9;--panel:#fff;--text:#172642;--muted:#6b778a;--line:#dce2ea;--mint:#159676;--blue:#e8f0f8;--blue-text:#27435f;--gold:#f4e6bd;--gold-text:#6b521b;--pink:#f8e8ed;--pink-text:#81475a;--table:#dac49e;--table-edge:#aa8b5d;--shadow:0 10px 30px rgba(23,38,66,.07)}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;background:var(--page);color:var(--text);font-family:"Noto Sans KR",sans-serif;-webkit-font-smoothing:antialiased}
     .hero{padding:max(23px,env(safe-area-inset-top)) 18px 22px;background:radial-gradient(circle at 92% 5%,rgba(53,199,165,.22),transparent 29%),linear-gradient(145deg,var(--navy),var(--navy-2));color:#fff}.hero-inner{max-width:980px;margin:auto}h1{margin:0 0 10px;font-size:clamp(27px,6.8vw,44px);line-height:1.28;letter-spacing:-.04em}.intro{margin:0;color:rgba(255,255,255,.82);font-size:14px;line-height:1.75}.intro strong{color:#fff}
-    .facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:17px}.fact{min-width:0;padding:9px 5px;border-radius:11px;background:rgba(255,255,255,.08);text-align:center}.fact-label{color:#9ce5d4;font-size:9px;font-weight:800;letter-spacing:.05em}.fact-value{margin-top:4px;color:#fff;font-size:11px;font-weight:700;line-height:1.45;word-break:keep-all}.notice{margin-top:17px;padding:13px 14px;border:1px solid rgba(209,168,91,.38);border-radius:13px;background:rgba(7,16,32,.28);color:#efe8d8;font-size:13px;line-height:1.65}.notice strong{color:#f5dca2}
+    .facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:17px}.fact{min-width:0;padding:9px 5px;border-radius:11px;background:rgba(255,255,255,.08);text-align:center}.fact-label{color:#9ce5d4;font-size:9px;font-weight:800;letter-spacing:.05em}.fact-value{margin-top:4px;color:#fff;font-size:11px;font-weight:700;line-height:1.45;word-break:keep-all}
     main{max-width:980px;margin:auto;padding:9px 14px calc(40px + env(safe-area-inset-bottom))}.card{margin-top:14px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--panel);box-shadow:var(--shadow)}h2{margin:0 0 5px;font-size:20px;letter-spacing:-.025em}
     .schedule{position:relative;margin-top:17px}.schedule::before{content:"";position:absolute;left:68px;top:10px;bottom:10px;width:2px;background:var(--line)}.event{position:relative;display:grid;grid-template-columns:58px 18px minmax(0,1fr);gap:3px;padding:5px 7px 20px 0;border-radius:11px}.event:last-child{padding-bottom:5px}.time{padding-top:1px;font-size:12px;font-weight:800;text-align:right}.dot{position:relative;z-index:1;width:10px;height:10px;margin:5px auto 0;border:2px solid var(--panel);border-radius:50%;background:#35c7a5;box-shadow:0 0 0 2px #35c7a5}.event-body{padding-left:9px}.event-name{font-size:14px;font-weight:800}.event-note{margin-top:3px;color:var(--muted);font-size:11px;line-height:1.5}.event.banquet{margin-bottom:13px;padding-top:10px;padding-bottom:10px;background:var(--gold);color:var(--gold-text)}.event.banquet .dot{background:#bd9133;box-shadow:0 0 0 2px #bd9133}.event.banquet .event-note{color:inherit;opacity:.82}.event.is-live::after{content:"현재 진행";position:absolute;right:8px;top:7px;padding:4px 7px;border-radius:999px;background:var(--navy);color:#fff;font-size:10px;font-weight:800;animation:pulse 1.15s ease-in-out infinite}@keyframes pulse{50%{opacity:.38;transform:scale(.96)}}@media(prefers-reduced-motion:reduce){.event.is-live::after{animation:none}}
     @media(min-width:700px){.hero{padding-bottom:30px}.fact{padding:11px 10px;text-align:left}.fact-label{font-size:10px}.fact-value{font-size:13px}.card{padding:24px}.schedule{max-width:660px}}
     @media(max-width:430px){.hero{padding-left:15px;padding-right:15px}.facts{gap:5px}.fact{padding:8px 3px}.fact-value{font-size:10px}.card{padding:16px 11px}}
     .roster-table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:14px;font-size:.875rem}
-    .roster-table th,.roster-table td{padding:10px 6px;border-bottom:1px solid var(--line);line-height:1.5;text-align:left;word-break:keep-all}
+    .contact{
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px 16px;
+      margin-top:17px;padding:12px 14px;border:1px solid #57baff;border-radius:13px;
+      background:#102d50;color:#e8f6ff;box-shadow:0 0 15px rgba(72,175,255,.28);
+      font-size:.875rem;line-height:1.55
+    }
+    .contact p{margin:0}
+    .contact-name{color:#bde4ff}
+    .contact a{display:inline-flex;align-items:center;min-height:44px;color:#9edcff;font-size:1rem;font-weight:800;text-underline-offset:4px}
+    .contact a:focus-visible,.roster-summary:focus-visible{outline:2px solid #57baff;outline-offset:3px}
+    .layout-note{margin:5px 0 12px;color:var(--muted);font-size:.875rem}
+    .temporary-layout{position:relative;display:grid;gap:20px;max-width:550px;margin:auto;padding:18px;border:1px dashed #b4c3d4;border-radius:12px;background:#f4f7fb}
+    .mock-table{display:grid;grid-template-rows:auto 24px auto;gap:4px}
+    .seat-strip{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+    .seat-strip span{height:10px;border-radius:4px;background:#cad8ea}
+    .table-surface{border:1px solid #9fb2ca;border-radius:5px;background:#dae5f3}
+    .pending-stamp{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-17deg);
+      padding:2px 18px;border:4px double currentColor;border-radius:9px;
+      color:#b42332;background:#fff7f7;font-size:clamp(1.75rem,7vw,2.5rem);
+      font-weight:800;letter-spacing:.1em;pointer-events:none
+    }
+    .roster-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;cursor:pointer;list-style:none}
+    .roster-summary::-webkit-details-marker{display:none}
+    .roster-summary h2{margin:0}
+    .roster-toggle{color:#1b548b;font-size:.875rem;font-weight:700;white-space:nowrap}
+    .roster .toggle-close,.roster[open] .toggle-open{display:none}
+    .roster[open] .toggle-close{display:inline}
+    .roster-table th,.roster-table td{padding:5px 6px;border-bottom:1px solid var(--line);line-height:1.4;text-align:left;word-break:keep-all}
     .roster-table thead th{background:#eef2f7}.roster-table thead th:first-child{width:54%}.roster-table thead th:nth-child(2){width:25%}
     .roster-table tbody th{font-weight:500}.roster-table td:last-child{font-weight:700}
-    .roster-table .foundation th,.roster-table .foundation td{background:var(--gold);color:var(--gold-text)}
+    .roster-table .foundation th,.roster-table .foundation td{background:#fff3d6;color:#6b521b}
+    .roster-table .commander th,.roster-table .commander td{background:#e8f1fb;color:#264967}
   </style>
 </head>
 <body>
@@ -32,11 +61,14 @@
       <p class="intro"><strong>하충식 한마음국제의료재단 의장님</strong>께서 <strong>부대원 및 동반 가족</strong>을 <strong>그랜드머큐어 엠버서더 창원 호텔</strong>에 초청하셨습니다. 최종 참석 명단과 행사 일정을 안내드립니다.</p>
       <div class="facts" aria-label="행사 기본정보">
         <div class="fact"><div class="fact-label">일시</div><div class="fact-value">12. 11.(금)<br>18:30</div></div>
-        <div class="fact"><div class="fact-label">장소</div><div class="fact-value">그랜드머큐어 엠버서더<br>창원 호텔</div></div>
+        <div class="fact"><div class="fact-label">장소</div><div class="fact-value">그랜드머큐어 엠버서더<br>창원 호텔 EX룸</div></div>
         <div class="fact"><div class="fact-label">대상</div><div class="fact-value">총 32명<br>부대 측 31명 · 재단 측 1명</div></div>
         <div class="fact"><div class="fact-label">이동시간</div><div class="fact-value">약 45분<br>(편도)</div></div>
       </div>
-      <div class="notice"><strong>참석 조사가 종료되었습니다.</strong> 확정 참석 명단과 행사 일정을 확인해 주세요.</div>
+      <aside class="contact" aria-label="명단 변경 연락처">
+        <p><strong>명단 변경이 필요하시면 바로 유선으로 연락해 주시기 바랍니다.</strong><br><span class="contact-name">행정과장 소령 최영현</span></p>
+        <a href="tel:01031495149" aria-label="행정과장 소령 최영현에게 전화, 010-3149-5149">010-3149-5149</a>
+      </aside>
     </div>
   </header>
 
@@ -44,22 +76,44 @@
     <section class="card" aria-labelledby="scheduleTitle">
       <h2 id="scheduleTitle">행사 일정표</h2>
       <div class="schedule">
-        <div class="event" data-start="985" data-end="1000"><div class="time">16:25<br>~16:40</div><div class="dot"></div><div class="event-body"><div class="event-name">해성관 주차장 대기</div><div class="event-note">탑승 인원 확인 및 출발 준비</div></div></div>
-        <div class="event" data-start="1005" data-end="1020"><div class="time">16:45<br>~17:00</div><div class="dot"></div><div class="event-body"><div class="event-name">관사지역 대기</div><div class="event-note">탑승 인원 확인</div></div></div>
+        <div class="event" data-start="985" data-end="1000"><div class="time">16:25<br>~16:40</div><div class="dot"></div><div class="event-body"><div class="event-name">해성관 주차장 탑승</div><div class="event-note">탑승 인원 확인 및 출발 준비</div></div></div>
+        <div class="event" data-start="1005" data-end="1020"><div class="time">16:45<br>~17:00</div><div class="dot"></div><div class="event-body"><div class="event-name">관사지역 탑승</div><div class="event-note">탑승 인원 확인</div></div></div>
         <div class="event" data-start="1020" data-end="1080"><div class="time">17:00</div><div class="dot"></div><div class="event-body"><div class="event-name">부대 출발</div><div class="event-note">부대버스 1대 운용 예정</div></div></div>
-        <div class="event" data-start="1080" data-end="1110"><div class="time">18:00<br>~18:30</div><div class="dot"></div><div class="event-body"><div class="event-name">행사장 도착</div><div class="event-note">그랜드머큐어 엠버서더 창원 호텔</div></div></div>
+        <div class="event" data-start="1080" data-end="1110"><div class="time">18:00<br>~18:30</div><div class="dot"></div><div class="event-body"><div class="event-name">행사장 도착</div><div class="event-note">그랜드머큐어 엠버서더 창원 호텔 EX룸</div></div></div>
         <div class="event banquet" data-start="1110" data-end="1200"><div class="time">18:30<br>~20:00</div><div class="dot"></div><div class="event-body"><div class="event-name">초청 만찬 진행</div><div class="event-note">호텔 뷔페</div></div></div>
         <div class="event" data-start="1200" data-end="1260"><div class="time">20:00</div><div class="dot"></div><div class="event-body"><div class="event-name">행사 종료 및 복귀</div></div></div>
         <div class="event" data-start="1260" data-end="1290"><div class="time">21:00</div><div class="dot"></div><div class="event-body"><div class="event-name">부대 도착</div></div></div>
       </div>
     </section>
 
-    <section class="card" aria-labelledby="rosterTitle">
-      <h2 id="rosterTitle">확정 참석 명단</h2>
+    <section class="card" aria-labelledby="layoutTitle">
+      <h2 id="layoutTitle">만찬 배치도</h2>
+      <p class="layout-note">임시 배치도입니다. 테이블 구성과 좌석은 확정 후 안내드리겠습니다.</p>
+      <div class="temporary-layout" role="img" aria-label="미정. 좌석 배정 전 임시 테이블 배치 예시">
+        <div class="mock-table" aria-hidden="true">
+          <div class="seat-strip"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="table-surface"></div>
+          <div class="seat-strip"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="mock-table" aria-hidden="true">
+          <div class="seat-strip"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="table-surface"></div>
+          <div class="seat-strip"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="pending-stamp" aria-hidden="true">미정</div>
+      </div>
+    </section>
+
+    <details class="card roster">
+      <summary class="roster-summary">
+        <h2 id="rosterTitle">확정 참석 명단</h2>
+        <span class="roster-toggle"><span class="toggle-open">펼치기</span><span class="toggle-close">접기</span></span>
+      </summary>
       <table class="roster-table" aria-labelledby="rosterTitle">
         <thead><tr><th scope="col">직책</th><th scope="col">계급</th><th scope="col">성명</th></tr></thead>
         <tbody>
-          <tr><th scope="row">5비 단장</th><td>—</td><td>—</td></tr>
+          <tr class="foundation"><th scope="row">재단 의장</th><td>—</td><td>하충식</td></tr>
+          <tr class="commander"><th scope="row">5비 단장</th><td>—</td><td>—</td></tr>
           <tr><th scope="row">인사행정처장</th><td>중령</td><td>윤창호</td></tr>
           <tr><th scope="row">행정과장</th><td>소령</td><td>최영현</td></tr>
           <tr><th scope="row">꿈나무체육대회 봉사자</th><td>대위</td><td>박가현</td></tr>
@@ -71,7 +125,7 @@
           <tr><th scope="row">꿈나무체육대회 봉사자</th><td>원사</td><td>서강석</td></tr>
           <tr><th scope="row">꿈나무체육대회 봉사자</th><td>상사</td><td>송가람</td></tr>
           <tr><th scope="row">꿈나무체육대회 봉사자</th><td>상사</td><td>정혜경</td></tr>
-          <tr><th scope="row">정혜경 가족</th><td>—</td><td>김성균</td></tr>
+          <tr><th scope="row">정혜경 배우자</th><td>—</td><td>김성균</td></tr>
           <tr><th scope="row">꿈나무체육대회 봉사자</th><td>중사</td><td>이신실</td></tr>
           <tr><th scope="row">꿈나무체육대회 봉사자</th><td>중사</td><td>함석호</td></tr>
           <tr><th scope="row">꿈나무체육대회 봉사자</th><td>중사</td><td>장한슬</td></tr>
@@ -90,10 +144,9 @@
           <tr><th scope="row">운항관제대대장</th><td>중령</td><td>김상협</td></tr>
           <tr><th scope="row">전속부관</th><td>대위(진)</td><td>갈부강</td></tr>
           <tr><th scope="row">운전관</th><td>중사</td><td>김종호</td></tr>
-          <tr class="foundation"><th scope="row">재단 의장</th><td>—</td><td>하충식</td></tr>
         </tbody>
       </table>
-    </section>
+    </details>
   </main>
 
   <script>
